@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:noteapp/app/data/secure_storage.dart';
 import 'package:noteapp/app/models/model.dart';
 import 'package:noteapp/app/modules/login/views/login_view.dart';
 
@@ -12,6 +13,8 @@ class HomeController extends GetxController {
   late TextEditingController nameController;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   late CollectionReference collectionReference;
+  final secureStorage = SecureStorage();
+  final name = ''.obs;
   RxList<CollectionModel> collections = RxList<CollectionModel>([]);
 
   final count = 0.obs;
@@ -21,6 +24,7 @@ class HomeController extends GetxController {
     nameController = TextEditingController();
     collectionReference = firebaseFirestore.collection("collections");
     collections.bindStream(getAllCollections());
+    getImage();
     super.onInit();
   }
 
@@ -72,5 +76,11 @@ class HomeController extends GetxController {
     }).catchError((onError){
       print(onError);
     });
+  }
+
+  void getImage() async{
+    name.value = (await secureStorage.getName())!;
+    secureStorage.deleteAll();
+    update();
   }
 }

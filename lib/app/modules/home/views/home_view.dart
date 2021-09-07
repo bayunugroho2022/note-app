@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/helpers/size_config.dart';
+import 'package:noteapp/app/modules/note/views/note_view.dart';
 import 'package:noteapp/app/widgets/widget_add_or_update.dart';
 
 import '../controllers/home_controller.dart';
@@ -15,6 +16,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -30,7 +32,7 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
           backgroundColor: Color(dark),
           title: Text(
-            'Notes',
+            'Hello ${controller.name.value} ... ',
             style: TextStyle(color: Color(white)),
           ),
           actions: [
@@ -54,10 +56,15 @@ class HomeView extends GetView<HomeController> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
+                      onTap: (){
+                        Get.to(NoteView(
+                          docsId : controller.collections[index].docId,
+                          collectionName: controller.collections[index].name,
+                        ));
+                      },
                       onLongPress: (){
                         controller.nameController.text = controller.collections[index].name!;
                         controller.update();
-                        print("sasasasa " + controller.collections[index].docId!);
                         buildAddEditCollectionView(text: 'UPDATE',controller: controller.nameController,doc: controller.collections[index].docId!,
                             onPressDelete: (){
                             controller.deleteCollection(controller.collections[index].docId!);
