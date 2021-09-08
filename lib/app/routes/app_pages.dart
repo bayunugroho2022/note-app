@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:noteapp/app/modules/add_note/bindings/add_note_binding.dart';
+import 'package:noteapp/app/modules/add_note/views/add_note_view.dart';
 import 'package:noteapp/app/modules/home/bindings/home_binding.dart';
 import 'package:noteapp/app/modules/home/views/home_view.dart';
 import 'package:noteapp/app/modules/intro/bindings/intro_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.NOTE,
       page: () => NoteView(),
       binding: NoteBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_NOTE,
+      page: () => AddNoteView(),
+      binding: AddNoteBinding(),
     ),
   ];
 }

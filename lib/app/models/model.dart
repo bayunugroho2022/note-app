@@ -17,3 +17,16 @@ class CollectionModel {
     uid = data["uid"];
   }
 }
+
+class NoteModel {
+  String? title;
+  String? note;
+  String? docId;
+  NoteModel({ this.docId,this.title,this.note});
+
+  NoteModel.fromMap(DocumentSnapshot data) {
+    docId = data.id;
+    title = data["title"];
+    note = data["note"];
+  }
+}
