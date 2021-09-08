@@ -22,8 +22,12 @@ class HomeView extends GetView<HomeController> {
           onPressed: () {
             controller.nameController.text = "";
             controller.update();
-            buildAddEditCollectionView(text: 'ADD',onPressSave: (){ controller
-                .saveCollection(controller.nameController.text);},controller: controller.nameController);
+            buildAddEditCollectionView(
+                text: 'ADD',
+                onPressSave: () {
+                  controller.saveCollection(controller.nameController.text);
+                },
+                controller: controller.nameController);
           },
           child: Icon(Icons.add),
           backgroundColor: Color(blue),
@@ -31,10 +35,10 @@ class HomeView extends GetView<HomeController> {
         backgroundColor: Color(dark),
         appBar: AppBar(
           backgroundColor: Color(dark),
-          title: Text(
-            'Hello ${controller.name.value} ... ',
-            style: TextStyle(color: Color(white)),
-          ),
+          title: Obx(() => Text(
+                'Hello ${controller.name.value} ... ',
+                style: TextStyle(color: Color(white)),
+              )),
           actions: [
             IconButton(
                 onPressed: () {
@@ -56,19 +60,27 @@ class HomeView extends GetView<HomeController> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Get.to(NoteView(
-                          docsId : controller.collections[index].docId,
+                          docsId: controller.collections[index].docId,
                           collectionName: controller.collections[index].name,
                         ));
                       },
-                      onLongPress: (){
-                        controller.nameController.text = controller.collections[index].name!;
+                      onLongPress: () {
+                        controller.nameController.text =
+                            controller.collections[index].name!;
                         controller.update();
-                        buildAddEditCollectionView(text: 'UPDATE',controller: controller.nameController,doc: controller.collections[index].docId!,
-                            onPressDelete: (){
-                            controller.deleteCollection(controller.collections[index].docId!);
-                        },onPressUpdate: () => controller.updateCollection(controller.collections[index].docId!, controller.nameController.text));
+                        buildAddEditCollectionView(
+                            text: 'UPDATE',
+                            controller: controller.nameController,
+                            doc: controller.collections[index].docId!,
+                            onPressDelete: () {
+                              controller.deleteCollection(
+                                  controller.collections[index].docId!);
+                            },
+                            onPressUpdate: () => controller.updateCollection(
+                                controller.collections[index].docId!,
+                                controller.nameController.text));
                       },
                       child: GlassmorphicContainer(
                         width: Get.width / 2,
@@ -101,8 +113,15 @@ class HomeView extends GetView<HomeController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset("assets/img/folder.png", height: 70.0),
-                            SizedBox(height: 10,),
-                            Text("${controller.collections[index].name}",style: TextStyle(color: Color(white),fontSize: SizeConfig.blockVertical! * 3),)
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "${controller.collections[index].name}",
+                              style: TextStyle(
+                                  color: Color(white),
+                                  fontSize: SizeConfig.blockVertical! * 3),
+                            )
                           ],
                         ),
                       ),
@@ -113,6 +132,4 @@ class HomeView extends GetView<HomeController> {
               )),
         ));
   }
-
-
 }

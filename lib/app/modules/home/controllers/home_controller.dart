@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noteapp/app/data/secure_storage.dart';
 import 'package:noteapp/app/models/model.dart';
 import 'package:noteapp/app/modules/login/views/login_view.dart';
+import 'package:noteapp/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,6 +16,7 @@ class HomeController extends GetxController {
   late CollectionReference collectionReference;
   final secureStorage = SecureStorage();
   final name = ''.obs;
+  final uid = ''.obs;
   RxList<CollectionModel> collections = RxList<CollectionModel>([]);
 
   final count = 0.obs;
@@ -22,9 +24,9 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     nameController = TextEditingController();
-    collectionReference = firebaseFirestore.collection("collections");
-    collections.bindStream(getAllCollections());
     getImage();
+    collectionReference = firebaseFirestore.collection("collections");
+
     super.onInit();
   }
 
@@ -36,21 +38,23 @@ class HomeController extends GetxController {
   @override
   void onClose() {}
 
-  Stream<List<CollectionModel>> getAllCollections() =>
-      collectionReference.snapshots().map((query) =>
+  Stream<List<CollectionModel>> getAllCollections(String uid) {
+      return firebaseFirestore.collection("collections").where("uid",isEqualTo: uid).snapshots().map((query) =>
           query.docs.map((item) => CollectionModel.fromMap(item)).toList());
+  }
 
   Future<void> logoutGoogle() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
-    Get.offAll(LoginView());
-    // Get.back(); // navigate to your wanted page after logout.
+    secureStorage.deleteAll();
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   void saveCollection(String name) {
     if(name.isNotEmpty){
       collectionReference.add({
-        "name" : name
+        "name" : name,
+        "uid" : uid.value
       }).whenComplete((){
         nameController.text = "";
         Get.back();
@@ -70,7 +74,7 @@ class HomeController extends GetxController {
 
   void updateCollection(String docId,String name){
     collectionReference.doc(docId).update({
-      "name" : name
+      "name" : name,
     }).whenComplete(() {
       Get.back();
     }).catchError((onError){
@@ -80,7 +84,9 @@ class HomeController extends GetxController {
 
   void getImage() async{
     name.value = (await secureStorage.getName())!;
-    secureStorage.deleteAll();
+    uid.value = (await secureStorage.getUid())!;
     update();
+    collections.bindStream(getAllCollections(uid.value));
   }
+
 }

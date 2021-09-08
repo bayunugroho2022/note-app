@@ -7,11 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CollectionModel {
   String? name;
+  String? uid;
   String? docId;
-  CollectionModel({ this.docId,this.name});
+  CollectionModel({ this.docId,this.name,this.uid});
 
   CollectionModel.fromMap(DocumentSnapshot data) {
     docId = data.id;
     name = data["name"];
+    uid = data["uid"];
   }
 }
