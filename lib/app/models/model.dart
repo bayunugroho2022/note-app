@@ -21,12 +21,18 @@ class CollectionModel {
 class NoteModel {
   String? title;
   String? note;
+  String? last_edited;
   String? docId;
-  NoteModel({ this.docId,this.title,this.note});
+  int? label_color;
+  Timestamp? createdAt;
+  NoteModel({ this.docId,this.label_color,this.createdAt,this.title,this.note,this.last_edited});
 
   NoteModel.fromMap(DocumentSnapshot data) {
     docId = data.id;
     title = data["title"];
     note = data["note"];
+    last_edited = data["last_edited"];
+    label_color = data["label_color"];
+    createdAt = data["createdAt"];
   }
 }

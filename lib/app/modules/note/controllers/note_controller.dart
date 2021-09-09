@@ -24,7 +24,7 @@ class NoteController extends GetxController {
   }
 
   Stream<List<NoteModel>> getAllNotesCollection(String docsId) {
-    return firebaseFirestore.collection("collections").doc(docsId).collection("notes").snapshots().map((query) =>
+    return firebaseFirestore.collection("collections").doc(docsId).collection("notes").orderBy("createdAt",descending: true).snapshots().map((query) =>
         query.docs.map((item) => NoteModel.fromMap(item)).toList());
   }
 

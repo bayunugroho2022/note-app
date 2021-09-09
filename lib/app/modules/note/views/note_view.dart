@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:glassmorphism/glassmorphism.dart';
@@ -35,60 +36,84 @@ class NoteView extends GetView<NoteController> {
       body: Container(
         height: Get.height,
         width: Get.width,
-        child: Obx(() => GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                },
-                onLongPress: () {
-                },
-                child: GlassmorphicContainer(
-                  width: Get.width / 2,
-                  height: Get.height / 4,
-                  borderRadius: 15,
-                  blur: 2,
-                  alignment: Alignment.center,
-                  border: 1,
-                  linearGradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFffffff).withOpacity(0.1),
-                        Color(0xFFFFFFFF).withOpacity(0.05),
-                      ],
-                      stops: [
-                        1,
-                        1,
-                      ]),
-                  borderGradient: LinearGradient(
+        child: Obx(() => StaggeredGridView.countBuilder(
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          itemCount: controller.collections.length,
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          crossAxisCount: 4,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () {
+              Get.to(AddNoteView(
+                docsId: docsId,
+                note:controller.collections[index],
+                docNote:controller.collections[index].docId
+              ));
+            },
+            child: Container(
+              padding: EdgeInsets.all(7),
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                gradient: new LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(dark).withOpacity(0.5),
-                      Color((dark)).withOpacity(0.5),
+                      Color(0xFFffffff).withOpacity(0.1),
+                      Color(0xFFFFFFFF).withOpacity(0.05),
                     ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "${controller.collections[index].title}",
-                        style: TextStyle(
-                            color: Color(white),
-                            fontSize: SizeConfig.blockVertical! * 3),
-                      )
-                    ],
-                  ),
-                ),
+                    stops: [
+                      1,
+                      1,
+                    ]),
               ),
-            );
-          },
-          itemCount: controller.collections.length,
+              child:  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: kLabelToColor[controller.collections[index].label_color],
+                              size: 14,
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 6),
+                                child: Text(controller.collections[index].title!,
+                                    maxLines: 1,
+                                    style: TextStyle(color: Color(white2)),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.start),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color:  Colors.white,
+                        thickness: 0.5,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    controller.collections[index].note!,
+                    style: TextStyle(height: 1.2,color: Color(white)),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
+                    maxLines: 8,
+                  )
+                ],
+              ),
+            ),
+          ),
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
         )),
       )
     );
