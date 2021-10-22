@@ -21,10 +21,10 @@ class LoginView extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Image.asset("assets/img/login.png"),
             ),
-            SizedBox(height: 50,),
+            SizedBox(height: 10,),
             InkWell(
               onTap: (){controller.signInwithGoogle();},
               child: Container(

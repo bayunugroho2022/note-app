@@ -11,26 +11,21 @@ import 'package:noteapp/app/routes/app_pages.dart';
 import '../controllers/note_controller.dart';
 
 class NoteView extends GetView<NoteController> {
-  String? docsId;
-  String? collectionName;
-  NoteView({this.docsId,this.collectionName});
   final controller = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
-    controller.getNotes(docsId!);
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(AddNoteView(docsId: docsId,));
+          Get.to(AddNoteView(docsId: controller.docsId.value,));
         },
         child: Icon(Icons.add),
         backgroundColor: Color(blue),
       ),
       backgroundColor: Color(dark),
       appBar: AppBar(
-        title: Text('$collectionName'),
+        title: Text('$controller.collectionName.value'),
         backgroundColor: Color(dark),
       ),
       body: Container(
@@ -46,9 +41,9 @@ class NoteView extends GetView<NoteController> {
           itemBuilder: (context, index) => GestureDetector(
             onTap: () {
               Get.to(AddNoteView(
-                docsId: docsId,
+                docsId: controller.docsId.value,
                 note:controller.collections[index],
-                docNote:controller.collections[index].docId
+                docNote:controller.collections[index].docId!
               ));
             },
             child: Container(

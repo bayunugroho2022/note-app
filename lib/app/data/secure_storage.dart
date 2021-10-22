@@ -14,8 +14,6 @@ class SecureStorage {
 
   final FlutterSecureStorage _storage;
   static const _uidKey = 'UID';
-  static const _imageKey = 'IMAGE';
-  static const _emailKey = 'EMAIL';
   static const _nameKey = 'Name';
 
   Future<void> persistNameAndUid(String name,String uid) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/app/data/secure_storage.dart';
+import 'package:noteapp/app/helpers/tes.dart';
 import 'package:noteapp/app/routes/app_pages.dart';
 import 'package:noteapp/app/widgets/widget_indicator.dart';
 
@@ -20,6 +21,8 @@ class IntroController extends GetxController {
 
   @override
   void onReady() {
+    FirebaseConfig.initialMessageHandler();
+    FirebaseConfig.onMessageOpenApp();
     super.onReady();
   }
 

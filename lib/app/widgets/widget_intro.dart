@@ -6,7 +6,7 @@ import 'package:noteapp/app/helpers/colors.dart';
  * Copyright (c) 2021 . All rights reserved.
  */
 
-Widget makePage({image, title, content, reverse = false}) {
+Widget makePageIntro({image, title, content, reverse = false}) {
   return Container(
     padding: EdgeInsets.only(left: 50, right: 50, bottom: 60),
     child: Column(
@@ -15,10 +15,7 @@ Widget makePage({image, title, content, reverse = false}) {
         !reverse ?
         Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(image),
-            ),
+            Image.asset(image),
             SizedBox(height: 30,),
           ],
         ) : SizedBox(),
@@ -47,3 +44,5 @@ Widget makePage({image, title, content, reverse = false}) {
     ),
   );
 }
+
+

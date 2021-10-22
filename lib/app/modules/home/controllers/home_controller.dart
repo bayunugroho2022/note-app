@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noteapp/app/data/secure_storage.dart';
+import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/models/model.dart';
 import 'package:noteapp/app/modules/login/views/login_view.dart';
 import 'package:noteapp/app/routes/app_pages.dart';
+import 'package:noteapp/main.dart';
 
 class HomeController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,6 +20,7 @@ class HomeController extends GetxController {
   final secureStorage = SecureStorage();
   final name = ''.obs;
   final uid = ''.obs;
+  DateTime? currentBackPressTime;
   RxList<CollectionModel> collections = RxList<CollectionModel>([]);
 
   final count = 0.obs;
@@ -24,9 +28,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     nameController = TextEditingController();
-    getImage();
-    collectionReference = firebaseFirestore.collection("collections");
-
+    getUserLogin();
     super.onInit();
   }
 
@@ -82,11 +84,23 @@ class HomeController extends GetxController {
     });
   }
 
-  void getImage() async{
+  void getUserLogin() async{
     name.value = (await secureStorage.getName())!;
     uid.value = (await secureStorage.getUid())!;
     update();
     collections.bindStream(getAllCollections(uid.value));
   }
 
+  Future<bool> onWillPop() async{
+    final now = DateTime.now();
+    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
+        currentBackPressTime == null ||
+            now.difference(currentBackPressTime!) > Duration(seconds: 2);
+
+    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
+      currentBackPressTime = now;
+      return false;
+    }
+    return true;
+  }
 }

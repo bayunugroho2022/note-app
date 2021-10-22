@@ -68,4 +68,6 @@ class AddNoteController extends GetxController {
       });
     }
 
-  }}
+  }
+
+}

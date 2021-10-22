@@ -2,7 +2,6 @@ import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:noteapp/app/helpers/date_formatter.dart';
 import 'package:noteapp/app/widgets/widget_color_star.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/helpers/size_config.dart';

@@ -9,6 +9,7 @@ import '../controllers/intro_controller.dart';
 
 class IntroView extends GetView<IntroController> {
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,21 +43,21 @@ class IntroView extends GetView<IntroController> {
             },
             controller: controller.pageController,
             children: <Widget>[
-              makePage(
-                  image: 'assets/img/1.png',
+              makePageIntro(
+                  image: 'assets/img/intro1.png',
                   title: "Daily Notes",
-                  content: "buat catatan, pengingat, tetapkan target, kumpulkan sumber daya, dan privasi keamanan"
+                  content: "take notes, set targets, collect resources and security privacy"
               ),
-              makePage(
+              makePageIntro(
                   reverse: true,
-                  image: 'assets/img/1.png',
-                  title: Strings.stepTwoTitle,
-                  content: Strings.stepTwoContent
+                  image: 'assets/img/intro3.png',
+                  title: "No Ads",
+                  content: "Simple app without ads"
               ),
-              makePage(
-                  image: 'assets/img/1.png',
-                  title: Strings.stepThreeTitle,
-                  content: Strings.stepThreeContent
+              makePageIntro(
+                  image: 'assets/img/intro2.png',
+                  title: "Easy to use",
+                  content: "simple to write everyday. Just write and keep a journal notebook! Pre-written log reminder."
               ),
             ],
           ),

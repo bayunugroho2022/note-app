@@ -11,6 +11,8 @@ class LoginController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final secureStorage = SecureStorage();
   final count = 0.obs;
+
+  
   @override
   void onInit() {
     super.onInit();
