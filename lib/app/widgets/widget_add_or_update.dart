@@ -7,7 +7,13 @@ import 'package:noteapp/app/helpers/colors.dart';
  * Copyright (c) 2021 . All rights reserved.
  */
 
-buildAddEditCollectionView({String? text,Function()? onPressSave,Function()? onPressDelete,Function()? onPressUpdate,TextEditingController? controller,String doc =""}) {
+buildAddEditCollectionView(
+    {String? text,
+    Function()? onPressSave,
+    Function()? onPressDelete,
+    Function()? onPressUpdate,
+    TextEditingController? controller,
+    String doc = ""}) {
   Get.bottomSheet(
     Container(
       decoration: BoxDecoration(
@@ -19,7 +25,7 @@ buildAddEditCollectionView({String? text,Function()? onPressSave,Function()? onP
       ),
       child: Padding(
         padding:
-        const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+            const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: SingleChildScrollView(
@@ -51,59 +57,63 @@ buildAddEditCollectionView({String? text,Function()? onPressSave,Function()? onP
                 SizedBox(
                   height: 8,
                 ),
-                doc == "" ? ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(
-                      width: Get.context!.width, height: 45),
-                  child: ElevatedButton(
-                    child: Text(
-                      text!,
-                      style: TextStyle(color: Color(white), fontSize: 16),
-                    ),
-                    onPressed: onPressSave,
-                  ),
-                ) :Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints.tightFor(
-                          width: Get.context!.width /3, height: 45),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            textStyle: TextStyle(
-                                fontSize: 16,
-                                color: Color(white),
-                                fontWeight: FontWeight.bold)),
-                        child: Text(
-                          "DELETE",
+                doc == ""
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints.tightFor(
+                            width: Get.context!.width, height: 45),
+                        child: ElevatedButton(
+                          child: Text(
+                            text!,
+                            style: TextStyle(color: Color(white), fontSize: 16),
+                          ),
+                          onPressed: onPressSave,
                         ),
-                        onPressed: onPressDelete,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ConstrainedBox(
+                            constraints: BoxConstraints.tightFor(
+                                width: Get.context!.width / 3, height: 45),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  textStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(white),
+                                      fontWeight: FontWeight.bold)),
+                              child: Text(
+                                "DELETE",
+                              ),
+                              onPressed: onPressDelete,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          ConstrainedBox(
+                            constraints: BoxConstraints.tightFor(
+                                width: Get.context!.width / 3, height: 45),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(blue),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  textStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(white),
+                                      fontWeight: FontWeight.bold)),
+                              child: Text(
+                                "UPDATE",
+                              ),
+                              onPressed: onPressUpdate,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 10,),
-                    ConstrainedBox(
-                      constraints: BoxConstraints.tightFor(
-                          width: Get.context!.width /3, height: 45),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(blue),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            textStyle: TextStyle(
-                                fontSize: 16,
-                                color: Color(white),
-                                fontWeight: FontWeight.bold)),
-                        child: Text(
-                          "UPDATE",
-                        ),
-                        onPressed: onPressUpdate,
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
