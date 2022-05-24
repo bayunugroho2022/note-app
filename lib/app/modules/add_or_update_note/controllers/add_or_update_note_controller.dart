@@ -27,7 +27,7 @@ class AddNoteController extends GetxController {
   void onClose() {}
 
   void checkUpdateOrNot(NoteModel? note, String? tag){
-      if(tag != null){
+      if(tag!.isNotEmpty){
         noteController.text = note!.note!;
         titleController.text = note.title!;
         isDone.value =true;
@@ -35,7 +35,6 @@ class AddNoteController extends GetxController {
         noteController.text = "";
         titleController.text = "";
       }
-      update();
   }
 
   void deleteNote(String docsId,String? docNote){

@@ -2,36 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:noteapp/app/helpers/colors.dart';
-import 'package:noteapp/app/helpers/size_config.dart';
-import 'package:noteapp/app/modules/add_note/views/add_note_view.dart';
+import 'package:noteapp/app/modules/note/controllers/note_controller.dart';
 import 'package:noteapp/app/routes/app_pages.dart';
 
-import '../controllers/note_controller.dart';
 
 class NoteView extends GetView<NoteController> {
-  final controller = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(AddNoteView(docsId: controller.docsId.value,));
+          Get.toNamed(Routes.ADD_NOTE,
+              arguments: {
+                "docsId": controller.docsId.value,
+              });
         },
         child: Icon(Icons.add),
         backgroundColor: Color(blue),
       ),
       backgroundColor: Color(dark),
       appBar: AppBar(
-        title: Text('$controller.collectionName.value'),
+        title: Text('${controller.collectionName.value}'),
         backgroundColor: Color(dark),
       ),
       body: Container(
         height: Get.height,
         width: Get.width,
-        child: Obx(() => StaggeredGridView.countBuilder(
+        child: Obx(() => MasonryGridView.count(
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
           itemCount: controller.collections.length,
@@ -40,11 +39,12 @@ class NoteView extends GetView<NoteController> {
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) => GestureDetector(
             onTap: () {
-              Get.to(AddNoteView(
-                docsId: controller.docsId.value,
-                note:controller.collections[index],
-                docNote:controller.collections[index].docId!
-              ));
+              Get.toNamed(Routes.ADD_NOTE,
+              arguments: {
+                "docsId": controller.docsId.value,
+                "note": controller.collections[index],
+                "docNote" :controller.collections[index].docId!
+              });
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -108,7 +108,7 @@ class NoteView extends GetView<NoteController> {
               ),
             ),
           ),
-          staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+          // staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
         )),
       )
     );

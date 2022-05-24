@@ -29,14 +29,14 @@ class LoginController extends GetxController {
 
   Future<String?> signInwithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-      await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount!.authentication;
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
+
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
+
       await _auth.signInWithCredential(credential);
       saveToLocal(_auth.currentUser!);
     } on FirebaseAuthException catch (e) {
@@ -47,7 +47,6 @@ class LoginController extends GetxController {
 
   void saveToLocal(User user) {
     secureStorage.persistNameAndUid(user.displayName!,user.uid);
-    update();
     Get.offAndToNamed(Routes.HOME);
   }
 

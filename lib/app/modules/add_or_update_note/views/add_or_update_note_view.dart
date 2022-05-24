@@ -5,22 +5,13 @@ import 'package:noteapp/app/widgets/widget_color_star.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/helpers/size_config.dart';
-import 'package:noteapp/app/models/model.dart';
 
-import '../controllers/add_note_controller.dart';
+import '../controllers/add_or_update_note_controller.dart';
 
 class AddNoteView extends GetView<AddNoteController> {
-  String? docsId;
-  NoteModel? note;
-  String? docNote;
-
-  AddNoteView({this.docNote, this.docsId, this.note});
-
-  final controller = Get.put(AddNoteController());
-
   @override
   Widget build(BuildContext context) {
-    controller.checkUpdateOrNot(note, docNote);
+    controller.checkUpdateOrNot(Get.arguments['note'], Get.arguments['docNote']);
 
     return Scaffold(
       floatingActionButton: FabCircularMenu(
@@ -30,15 +21,18 @@ class AddNoteView extends GetView<AddNoteController> {
           ringColor: Color(blue),
           children: <Widget>[
             Visibility(
-              visible: docNote == null ? false : true,
+              visible: Get.arguments['docNote'] == null ? false : true,
               child: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    controller.deleteNote(docsId!, docNote);
+                    controller.deleteNote(Get.arguments['docsId'], Get.arguments['docNote']);
                   }),
             ),
             IconButton(
-                icon: Obx(() =>Icon(Icons.star,color: kLabelToColor[controller.labelColor],)),
+                icon: Obx(() => Icon(
+                      Icons.star,
+                      color: kLabelToColor[controller.labelColor.value],
+                    )),
                 onPressed: () {
                   Get.defaultDialog(
                       title: "",
@@ -47,59 +41,83 @@ class AddNoteView extends GetView<AddNoteController> {
                           children: [
                             Row(
                               children: [
-                                ColorStar(onTap: (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(0);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[0]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(1);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[1]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(2);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[2]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(3);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[3]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(4);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[4]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(0);
 
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[0]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(1);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[1]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(2);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[2]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(3);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[3]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(4);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[4]),
                               ],
                             ),
                             Row(
                               children: [
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(5);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[5]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(6);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[6]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(7);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[7]),
-                                ColorStar(onTap:  (){
-                                  controller.labelColor.value = kLabelToColor.keys.elementAt(8);
-                                  controller.update();
-                                  Get.back();
-                                }, labelColor: kLabelToColor[8]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(5);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[5]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(6);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[6]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(7);
+
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[7]),
+                                ColorStar(
+                                    onTap: () {
+                                      controller.labelColor.value =
+                                          kLabelToColor.keys.elementAt(8);
+                                      Get.back();
+                                    },
+                                    labelColor: kLabelToColor[8]),
                               ],
                             ),
-
                           ],
                         ),
                       ));
@@ -109,9 +127,9 @@ class AddNoteView extends GetView<AddNoteController> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text(docNote == null
+        title: Text(Get.arguments['docNote'] == null
             ? ""
-            : "Edited " + TimeAgo.timeAgoSinceDate(note!.last_edited!)),
+            : "Edited " + TimeAgo.timeAgoSinceDate(Get.arguments['note'].last_edited!)),
         backgroundColor: Color(dark),
         actions: [
           Padding(
@@ -123,8 +141,8 @@ class AddNoteView extends GetView<AddNoteController> {
                         controller.saveOrUpdateNote(
                             controller.titleController.text,
                             controller.noteController.text,
-                            docsId!,
-                            docNote);
+                            Get.arguments['docsId'],
+                            Get.arguments['docNote']);
                       },
                       icon: Icon(
                         Icons.check,
@@ -145,10 +163,8 @@ class AddNoteView extends GetView<AddNoteController> {
                   if (val.isNotEmpty &&
                       controller.noteController.text.isNotEmpty) {
                     controller.isDone.value = true;
-                    controller.update();
                   } else {
                     controller.isDone.value = false;
-                    controller.update();
                   }
                 },
                 controller: controller.titleController,
@@ -172,10 +188,8 @@ class AddNoteView extends GetView<AddNoteController> {
                     if (val.isNotEmpty &&
                         controller.titleController.text.isNotEmpty) {
                       controller.isDone.value = true;
-                      controller.update();
                     } else {
                       controller.isDone.value = false;
-                      controller.update();
                     }
                   },
                   controller: controller.noteController,

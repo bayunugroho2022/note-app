@@ -7,7 +7,7 @@ import 'package:noteapp/app/helpers/size_config.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  final controller = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/modules/login/views/login_view.dart';
+import 'package:noteapp/app/routes/app_pages.dart';
 import 'package:noteapp/app/widgets/widget_intro.dart';
 
 import '../controllers/intro_controller.dart';
@@ -22,7 +23,7 @@ class IntroView extends GetView<IntroController> {
             padding: EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               onTap: (){
-                Get.to(LoginView());
+                Get.toNamed(Routes.LOGIN);
               },
               child: Text('Skip', style: TextStyle(
                   color: Color(white),

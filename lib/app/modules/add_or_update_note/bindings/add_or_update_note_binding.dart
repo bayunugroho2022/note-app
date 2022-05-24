@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/add_note_controller.dart';
+import '../controllers/add_or_update_note_controller.dart';
 
 class AddNoteBinding extends Bindings {
   @override

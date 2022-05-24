@@ -1,33 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noteapp/app/data/secure_storage.dart';
-import 'package:noteapp/app/helpers/colors.dart';
 import 'package:noteapp/app/models/model.dart';
-import 'package:noteapp/app/modules/login/views/login_view.dart';
 import 'package:noteapp/app/routes/app_pages.dart';
-import 'package:noteapp/main.dart';
+
+import '../../../widgets/widget_add_or_update.dart';
 
 class HomeController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  late TextEditingController nameController;
+  final nameController = TextEditingController();
+
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  late CollectionReference collectionReference;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final secureStorage = SecureStorage();
+
   final name = ''.obs;
   final uid = ''.obs;
   DateTime? currentBackPressTime;
   RxList<CollectionModel> collections = RxList<CollectionModel>([]);
 
-  final count = 0.obs;
-
   @override
   void onInit() {
-    nameController = TextEditingController();
     getUserLogin();
     super.onInit();
   }
@@ -54,7 +51,7 @@ class HomeController extends GetxController {
 
   void saveCollection(String name) {
     if(name.isNotEmpty){
-      collectionReference.add({
+      firebaseFirestore.collection("collections").add({
         "name" : name,
         "uid" : uid.value
       }).whenComplete((){
@@ -62,12 +59,12 @@ class HomeController extends GetxController {
         Get.back();
       });
     }else{
-      print('data tidak boleh kosong');
+      Get.snackbar("Ops ... ", "Data tidak boleh kosong");
     }
   }
 
   void deleteCollection(String docId){
-    collectionReference.doc(docId).delete().whenComplete(() {
+    firebaseFirestore.collection("collections").doc(docId).delete().whenComplete(() {
       Get.back();
     }).catchError((onError){
       print(onError);
@@ -75,7 +72,7 @@ class HomeController extends GetxController {
   }
 
   void updateCollection(String docId,String name){
-    collectionReference.doc(docId).update({
+    firebaseFirestore.collection("collections").doc(docId).update({
       "name" : name,
     }).whenComplete(() {
       Get.back();
@@ -84,18 +81,31 @@ class HomeController extends GetxController {
     });
   }
 
+  void onLongPress(int index){
+    nameController.text = collections[index].name!;
+    buildAddEditCollectionView(
+        text: 'UPDATE',
+        controller: nameController,
+        doc: collections[index].docId!,
+        onPressDelete: () {
+          deleteCollection(collections[index].docId!);
+        },
+        onPressUpdate: () {
+          updateCollection(collections[index].docId!, nameController.text);
+        });
+  }
+
   void getUserLogin() async{
     name.value = (await secureStorage.getName())!;
     uid.value = (await secureStorage.getUid())!;
-    update();
     collections.bindStream(getAllCollections(uid.value));
+
   }
 
   Future<bool> onWillPop() async{
     final now = DateTime.now();
     final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
-        currentBackPressTime == null ||
-            now.difference(currentBackPressTime!) > Duration(seconds: 2);
+        currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2);
 
     if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
       currentBackPressTime = now;

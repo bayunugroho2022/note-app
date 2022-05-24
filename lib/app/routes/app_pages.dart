@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
+import 'package:noteapp/app/modules/add_or_update_note/bindings/add_or_update_note_binding.dart';
+import 'package:noteapp/app/modules/add_or_update_note/views/add_or_update_note_view.dart';
 
-import 'package:noteapp/app/modules/add_note/bindings/add_note_binding.dart';
-import 'package:noteapp/app/modules/add_note/views/add_note_view.dart';
 import 'package:noteapp/app/modules/home/bindings/home_binding.dart';
 import 'package:noteapp/app/modules/home/views/home_view.dart';
 import 'package:noteapp/app/modules/intro/bindings/intro_binding.dart';

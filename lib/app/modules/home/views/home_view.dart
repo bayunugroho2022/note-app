@@ -12,19 +12,15 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   User? user = FirebaseAuth.instance.currentUser;
-  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    controller.onInit();
     return WillPopScope(
       onWillPop: controller.onWillPop,
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              controller.nameController.text = "";
-              controller.update();
               buildAddEditCollectionView(
                   text: 'ADD',
                   onPressSave: () {
@@ -71,19 +67,7 @@ class HomeView extends GetView<HomeController> {
                           });
                         },
                         onLongPress: () {
-                          controller.nameController.text = controller.collections[index].name!;
-                          controller.update();
-                          buildAddEditCollectionView(
-                              text: 'UPDATE',
-                              controller: controller.nameController,
-                              doc: controller.collections[index].docId!,
-                              onPressDelete: () {
-                                controller.deleteCollection(
-                                    controller.collections[index].docId!);
-                              },
-                              onPressUpdate: () => controller.updateCollection(
-                                  controller.collections[index].docId!,
-                                  controller.nameController.text));
+                          controller.onLongPress(index);
                         },
                         child: GlassmorphicContainer(
                           width: Get.width / 2,
@@ -120,8 +104,7 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                "${controller.collections[index].name}",
+                              Text("${controller.collections[index].name}",
                                 style: TextStyle(
                                     color: Color(white),
                                     fontSize: SizeConfig.blockVertical! * 3),

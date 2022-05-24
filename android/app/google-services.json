@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "602915090274",
-    "project_id": "noteapp-52ed0",
-    "storage_bucket": "noteapp-52ed0.appspot.com"
+    "project_number": "322477215366",
+    "project_id": "note-app-8540c",
+    "storage_bucket": "note-app-8540c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:602915090274:android:a5dcd411ca73c4ddd7463b",
+        "mobilesdk_app_id": "1:322477215366:android:463809c75191732a4b8b07",
         "android_client_info": {
           "package_name": "com.bayunugroho404.noteapp.noteapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "602915090274-fb78c0lf9lkln8dprhtr17pl8s0drj92.apps.googleusercontent.com",
+          "client_id": "322477215366-eg0ph3538klcbrj2ljbhe6a9kb9lkcvc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bayunugroho404.noteapp.noteapp",
-            "certificate_hash": "a6cd8743ce8f0ccc5893abfabf9024446bfbd10a"
+            "certificate_hash": "a87d90c9e418d7036121cb99d161230c2f1ac41f"
           }
         },
         {
-          "client_id": "602915090274-21edrhdp3nosae4mn5lge2r5cmb7c741.apps.googleusercontent.com",
+          "client_id": "322477215366-pin7fsu8ahdkn128ld3e88ab6f659ih7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD3wu_WHjI5m9yBzClOXRXBCero1yyfUuE"
+          "current_key": "AIzaSyAkZ8Z8Qesfdalp3IsEeH_qc5THPvwaVyI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "602915090274-21edrhdp3nosae4mn5lge2r5cmb7c741.apps.googleusercontent.com",
+              "client_id": "322477215366-pin7fsu8ahdkn128ld3e88ab6f659ih7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
