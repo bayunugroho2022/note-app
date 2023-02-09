@@ -27,7 +27,7 @@ class AddNoteController extends GetxController {
   void onClose() {}
 
   void checkUpdateOrNot(NoteModel? note, String? tag){
-      if(tag!.isNotEmpty){
+      if(tag != null){
         noteController.text = note!.note!;
         titleController.text = note.title!;
         isDone.value =true;
